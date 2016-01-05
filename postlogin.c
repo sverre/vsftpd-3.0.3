@@ -112,6 +112,13 @@ process_post_login(struct vsf_session* p_sess)
   /* Handle any login message */
   vsf_banner_dir_changed(p_sess, FTP_LOGINOK);
   vsf_cmdio_write(p_sess, FTP_LOGINOK, "Login successful.");
+  if (tunable_chdir_after_login)
+  {
+    static struct mystr s_chdir_after_login;
+    str_alloc_text(&s_chdir_after_login, tunable_chdir_after_login);
+    str_chdir(&s_chdir_after_login);
+    str_free(&s_chdir_after_login);
+  }
 
   while(1)
   {
