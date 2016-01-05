@@ -109,9 +109,6 @@ process_post_login(struct vsf_session* p_sess)
     vsf_sysutil_install_sighandler(kVSFSysUtilSigURG, handle_sigurg, p_sess, 0);
     vsf_sysutil_activate_sigurg(VSFTP_COMMAND_FD);
   }
-  /* Handle any login message */
-  vsf_banner_dir_changed(p_sess, FTP_LOGINOK);
-  vsf_cmdio_write(p_sess, FTP_LOGINOK, "Login successful.");
   if (tunable_chdir_after_login)
   {
     static struct mystr s_chdir_after_login;
@@ -119,6 +116,9 @@ process_post_login(struct vsf_session* p_sess)
     str_chdir(&s_chdir_after_login);
     str_free(&s_chdir_after_login);
   }
+  /* Handle any login message */
+  vsf_banner_dir_changed(p_sess, FTP_LOGINOK);
+  vsf_cmdio_write(p_sess, FTP_LOGINOK, "Login successful.");
 
   while(1)
   {
