@@ -112,9 +112,24 @@ process_post_login(struct vsf_session* p_sess)
   if (tunable_chdir_after_login)
   {
     static struct mystr s_chdir_after_login;
+    static struct mystr s_chdir_message;
+    int retval;
+    
     str_alloc_text(&s_chdir_after_login, tunable_chdir_after_login);
-    str_chdir(&s_chdir_after_login);
+    retval = str_chdir(&s_chdir_after_login);
+    if (retval == 0)
+    {
+      str_alloc_text(&s_chdir_message, "Initial directory changed to \"");
+    }
+    else
+    {
+      str_alloc_text(&s_chdir_message, "Failed to change intial directory to \"");
+    }
+    str_append_str(&s_chdir_message, &s_chdir_after_login);
+    str_append_text(&s_chdir_message, "\".\n\n");
+    vsf_banner_write(p_sess, &s_chdir_message, FTP_LOGINOK);
     str_free(&s_chdir_after_login);
+    str_free(&s_chdir_message);
   }
   /* Handle any login message */
   vsf_banner_dir_changed(p_sess, FTP_LOGINOK);
