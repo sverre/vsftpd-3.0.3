@@ -114,7 +114,6 @@ process_post_login(struct vsf_session* p_sess)
     static struct mystr s_chdir_after_login;
     static struct mystr s_chdir_message;
     int retval;
-    
     str_alloc_text(&s_chdir_after_login, tunable_chdir_after_login);
     retval = str_chdir(&s_chdir_after_login);
     if (retval == 0)
