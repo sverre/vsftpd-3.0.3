@@ -179,6 +179,7 @@ parseconf_str_array[] =
   { "dsa_private_key_file", &tunable_dsa_private_key_file },
   { "ca_certs_file", &tunable_ca_certs_file },
   { "cmds_denied", &tunable_cmds_denied },
+  { "chdir_after_login", &tunable_chdir_after_login },
   { 0, 0 }
 };
 
